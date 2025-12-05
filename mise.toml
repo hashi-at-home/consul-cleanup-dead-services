@@ -1,0 +1,8 @@
+[tools]
+go = "1.25"
+uv = "latest"
+
+[env]
+_.python.venv = { path = ".venv", create = true }
+[tasks]
+commit-deps = "uv pip install detect-secrets"
