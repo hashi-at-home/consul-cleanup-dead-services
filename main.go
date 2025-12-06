@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/charmbracelet/log"
+	"github.com/hashicorp/consul/api"
 )
 
 func main() {
@@ -29,5 +30,27 @@ func run(args []string) error {
 			log.Fatalf("%s environment variable is not set", env)
 		}
 	}
+
+	consulClient, err := api.NewClient(&api.Config{
+		Address: os.Getenv("CONSUL_HTTP_ADDR"),
+		Token:   os.Getenv("CONSUL_TOKEN"),
+	})
+	if err != nil {
+		log.Fatalf("Failed to create Consul API client: %s", err)
+		return err
+	}
+
+	// Construct a query that will get all nodes, healthy and not healthy
+	nodeQuery := &api.QueryOptions{}
+	nodes, _, err := consulClient.Catalog().Nodes(nodeQuery)
+	if len(nodes) == 0 || err != nil {
+		log.Fatal("No nodes found")
+		return err
+	}
+	for _, node := range nodes {
+
+		log.Infof("Node found: %s", node.Node)
+	}
+
 	return nil
 }
