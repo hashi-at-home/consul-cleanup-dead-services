@@ -3,7 +3,10 @@
 package main
 
 import (
+	"context"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/charmbracelet/log"
 	"github.com/hashicorp/consul/api"
@@ -48,9 +51,29 @@ func run(args []string) error {
 		return err
 	}
 	for _, node := range nodes {
-
 		log.Infof("Node found: %s", node.Node)
 	}
+
+	// Start a context to keep the service alive
+	ctx := context.Background()
+	defer ctx.Done()
+
+	// create a Consul API consumer to handle agents
+	if err != nil {
+		log.Fatalf("Failed to create Consul agent consumer: %s", err)
+		return err
+	}
+
+	// Create a channel to receive OS signals which will shut the service down
+	signalChan := make(chan os.Signal, 1)
+	signal.Notify(signalChan, os.Interrupt, syscall.SIGTERM)
+
+	// Start a goroutine to handle signals
+	go func() {
+		sig := <-signalChan
+		log.Infof("Received signal: %s", sig)
+		os.Exit(0)
+	}()
 
 	return nil
 }
