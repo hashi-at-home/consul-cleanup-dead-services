@@ -5,6 +5,7 @@ go 1.26
 require (
 	github.com/charmbracelet/log v0.4.2
 	github.com/hashicorp/consul/api v1.34.4
+	github.com/hashicorp/consul/api/v2 v2.0.0
 )
 
 require (
