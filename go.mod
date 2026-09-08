@@ -3,7 +3,7 @@ module github.com/hashiatho.me/consul-cleanup-dead-services
 go 1.26
 
 require (
-	github.com/charmbracelet/log v0.4.2
+	github.com/charmbracelet/log/v2 v2.0.1
 	github.com/hashicorp/consul/api v1.34.4
 )
 
