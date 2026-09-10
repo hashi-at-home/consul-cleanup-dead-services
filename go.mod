@@ -1,10 +1,10 @@
 module github.com/hashiatho.me/consul-cleanup-dead-services
 
-go 1.26
+go 1.26.7
 
 require (
 	github.com/charmbracelet/log v0.4.2
-	github.com/hashicorp/consul/api v1.34.4
+	github.com/hashicorp/consul/api v1.34.5
 )
 
 require (
@@ -36,5 +36,5 @@ require (
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
 	golang.org/x/exp v0.0.0-20260218203240-3dfff04db8fa // indirect
-	golang.org/x/sys v0.46.0 // indirect
+	golang.org/x/sys v0.48.0 // indirect
 )
